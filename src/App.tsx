@@ -1,35 +1,64 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import IrbInbox from './pages/IrbInbox';
+import Backlog from './pages/Backlog';
 
-function App() {
-  const [count, setCount] = useState(0)
+type Tab = 'inbox' | 'backlog';
+
+export default function App() {
+  const [tab, setTab] = useState<Tab>('inbox');
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div
+      style={{
+        minHeight: '100vh',
+        background: '#060606',
+        color: '#f2f2f2',
+        fontFamily: 'ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial'
+      }}
+    >
+      <div
+        style={{
+          padding: 16,
+          borderBottom: '1px solid #222',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}
+      >
+        <div>
+          <div style={{ fontWeight: 800 }}>Metadyne</div>
+          <div style={{ opacity: 0.7, fontSize: 12 }}>MeshCORE Control Room (public read / gated write)</div>
+        </div>
 
-export default App
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button
+            onClick={() => setTab('inbox')}
+            style={{
+              padding: '8px 10px',
+              borderRadius: 8,
+              border: '1px solid #333',
+              background: tab === 'inbox' ? '#1a1a1a' : 'transparent',
+              color: 'inherit'
+            }}
+          >
+            IRB Inbox
+          </button>
+          <button
+            onClick={() => setTab('backlog')}
+            style={{
+              padding: '8px 10px',
+              borderRadius: 8,
+              border: '1px solid #333',
+              background: tab === 'backlog' ? '#1a1a1a' : 'transparent',
+              color: 'inherit'
+            }}
+          >
+            Backlog
+          </button>
+        </div>
+      </div>
+
+      {tab === 'inbox' ? <IrbInbox /> : <Backlog />}
+    </div>
+  );
+}
