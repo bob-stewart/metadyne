@@ -24,4 +24,28 @@ Optional env vars:
 ## Deploy
 
 A GitHub Pages workflow is included at `.github/workflows/pages.yml`.
-# redeploy 2026-02-16T05:03:05Z
+
+## Admin (gated write)
+
+Metadyne is intentionally **public-read**. “Admin” actions are handled by a separate authenticated API deployed on Vercel.
+
+### Vite env
+
+Set in the Pages build (or local dev):
+
+- `VITE_ADMIN_API_BASE` = `https://<your-vercel-app>.vercel.app`
+
+### Vercel env (Admin API)
+
+Deploy this same repo to Vercel and configure these env vars:
+
+- `GITHUB_OAUTH_CLIENT_ID`
+- `GITHUB_OAUTH_CLIENT_SECRET`
+- `ADMIN_APP_URL` = `https://<your-vercel-app>.vercel.app`
+- `ADMIN_RETURN_TO` = `https://bob-stewart.github.io/metadyne/`
+- `ADMIN_ALLOW_GITHUB_LOGINS` = `bob-stewart`
+- `MESHCORE_OWNER` = `bob-stewart`
+- `MESHCORE_REPO` = `meshcore`
+- `MESHCORE_BRANCH` = `main`
+
+Admin writes are PR-as-transaction into MeshCORE (no silent mutation).
